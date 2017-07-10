@@ -34,29 +34,18 @@ export class BookingComponent {
   ) {}
 
  addBooking(event: any, form: NgForm ): void {
-   if(!form.value.time || !form.value.duration ) {
-     this.toastr.error('Unable to book due to missing fields.');
+   if (!this.validateBooking(form) ) {
      return;
    };
-   const hour = parseInt(form.value.time.split(':')[0], 10)
-   const minute = parseInt(form.value.time.split(':')[1], 10)
-   let dateTime = moment(this.bookingDate)
-   dateTime.set({
-     'hour': hour,
-     'minute': minute,
-     'second': 0,
-     'millisecond': 0
-   })
-   const date = dateTime.toISOString()
+
+  const date =this.getBookingDate(form);
   this.bookingService.add({
     name: 'Tester',
     avatar: 'man-2.svg',
     time: form.value.time,
     date: date,
     duration: form.value.duration,
-    endTime: moment(date)
-          .add( form.value.duration, 'minutes')
-          .toISOString(),
+    endTime: this.getEndTime(date, form.value.duration),
     bookedDate: moment().toISOString()
   }).then( booking => {
     this.toastr.success('Booking successfully created');
@@ -75,20 +64,13 @@ export class BookingComponent {
  }
 
  updateBooking(event: any, booking: NgForm): void {
-  const hour = parseInt(booking.value.time.split(':')[0], 10)
-  const minute = parseInt(booking.value.time.split(':')[1], 10)
-  let dateTime = moment(this.booking.date).set({
-     'hour': hour,
-     'minute': minute,
-     'second': 0,
-     'millisecond': 0
-  });
-  const date = dateTime.toISOString()
-  this.booking.date = date;
+  if (!this.validateBooking(booking)) {
+     return;
+  };
+
+  this.booking.date = this.getBookingDate(booking);
   this.booking.duration = booking.value.duration;
-  this.booking.endTime = moment(date)
-          .add( booking.value.duration, 'minutes')
-          .toISOString()
+  this.booking.endTime = this.getEndTime(this.booking.date, booking.value.duration);
   this.bookingService
     .update(this.booking)
     .then( resBooking => {
@@ -96,6 +78,31 @@ export class BookingComponent {
     });
   };
 
+  private getBookingDate(booking: NgForm): string {
+    const hour = parseInt(booking.value.time.split(':')[0], 10)
+    const minute = parseInt(booking.value.time.split(':')[1], 10)
+    let dateTime = moment(this.booking.date).set({
+      'hour': hour,
+      'minute': minute,
+      'second': 0,
+      'millisecond': 0
+    });
+    return dateTime.toISOString()
+  }
+
+  private getEndTime(date:string, duration: number ): string {
+    return moment(date)
+          .add( duration, 'minutes')
+          .toISOString()
+  }
+
+  private validateBooking(booking: NgForm): boolean {
+    if(!booking.value.time || !booking.value.duration ) {
+      this.toastr.error('Unable to book due to missing fields.');
+      return false;
+    };
+    return true;
+  }
 
   cancel(event: any): void {
     this.isNew = true;
