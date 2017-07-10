@@ -9,6 +9,11 @@ import {
   MdDatepickerModule,
   MdNativeDateModule
 } from '@angular/material';
+
+import { HttpModule } from '@angular/http';
+import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
+import { InMemoryDataService } from './shared/in-memory-data.service';
+
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule }   from '@angular/forms'; // <-- NgModel lives here
@@ -16,6 +21,8 @@ import { NavComponent }  from './core/nav/nav.component';
 import { AppComponent }  from './app.component';
 import { BookingListComponent }  from './booking-list/booking-list.component';
 import { BookingComponent }  from './booking/booking.component';
+
+import { BookingService } from './shared/booking.service'
 
 @NgModule({
   imports: [
@@ -29,7 +36,9 @@ import { BookingComponent }  from './booking/booking.component';
     MdInputModule,
     MdDatepickerModule,
     MdNativeDateModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    HttpModule,
+    InMemoryWebApiModule.forRoot(InMemoryDataService)
   ],
   declarations: [
     AppComponent,
@@ -37,6 +46,7 @@ import { BookingComponent }  from './booking/booking.component';
     BookingListComponent,
     BookingComponent
   ],
+  providers: [ BookingService ],
   bootstrap: [ AppComponent ]
 })
 export class AppModule { }
