@@ -3,7 +3,7 @@
     <div *ngIf="!isNew">{{booking.name}}'s Booking</div>
     <div *ngIf="isNew">New Booking</div>
     <md-input-container>
-      <input mdInput type="time" placeholder="Time" name="time" value={{booking.time}} ngModel>
+      <input mdInput type="time" placeholder="Time" name="time" value="{{booking.date | date:'HH:mm'}}" ngModel>
     </md-input-container>
     <md-input-container>
       <input mdInput type="number" min="10" max="60" step="5" placeholder="Duration" name="duration" value={{booking.duration}}  ngModel>
