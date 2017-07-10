@@ -8,14 +8,14 @@ export class InMemoryDataService implements InMemoryDbService {
         name: 'Teo Cheng Yong',
         avatar: 'boy-1.svg',
         time: '09:00',
-        date: '2017-07-10',
+        date: '2017-07-10T12:00:00.000Z',
         duration: 20
       },
       {
         id: 2,
         name: 'Ashlyn',
         avatar: 'girl-1.svg',
-        date: '2017-07-10',
+        date: '2017-07-10T10:00:00.000Z',
         time: '10:00',
         duration: 60
       },
@@ -23,8 +23,8 @@ export class InMemoryDataService implements InMemoryDbService {
         id: 3,
         name: 'Tom Bayers',
         avatar: 'man-1.svg',
-        time: '10:20',
-        date: '2017-07-10',
+        time: '8:20',
+        date: '2017-07-10T09:00:00.000Z',
         duration: 20
       }
     ];

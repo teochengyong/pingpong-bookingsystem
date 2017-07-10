@@ -22,7 +22,9 @@ import { AppComponent }  from './app.component';
 import { BookingListComponent }  from './booking-list/booking-list.component';
 import { BookingComponent }  from './booking/booking.component';
 
-import { BookingService } from './shared/booking.service'
+import { BookingService } from './shared/booking.service';
+
+import { OrderByDatePipe } from './shared/orderByDate.pipe';
 
 @NgModule({
   imports: [
@@ -38,13 +40,14 @@ import { BookingService } from './shared/booking.service'
     MdNativeDateModule,
     BrowserAnimationsModule,
     HttpModule,
-    InMemoryWebApiModule.forRoot(InMemoryDataService)
+    InMemoryWebApiModule.forRoot(InMemoryDataService),
   ],
   declarations: [
     AppComponent,
     NavComponent,
     BookingListComponent,
-    BookingComponent
+    BookingComponent,
+    OrderByDatePipe
   ],
   providers: [ BookingService ],
   bootstrap: [ AppComponent ]
