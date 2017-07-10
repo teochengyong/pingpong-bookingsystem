@@ -75,12 +75,27 @@ export class BookingComponent {
  }
 
  updateBooking(event: any, booking: NgForm): void {
+  const hour = parseInt(booking.value.time.split(':')[0], 10)
+  const minute = parseInt(booking.value.time.split(':')[1], 10)
+  let dateTime = moment(this.booking.date).set({
+     'hour': hour,
+     'minute': minute,
+     'second': 0,
+     'millisecond': 0
+  });
+  const date = dateTime.toISOString()
+  this.booking.date = date;
+  this.booking.duration = booking.value.duration;
+  this.booking.endTime = moment(date)
+          .add( booking.value.duration, 'minutes')
+          .toISOString()
   this.bookingService
-    .update(Object.assign(this.booking, booking.value))
+    .update(this.booking)
     .then( resBooking => {
       this.sharedService.editBookingList(booking);
     });
   };
+
 
   cancel(event: any): void {
     this.isNew = true;
