@@ -3,6 +3,8 @@ import { NgForm } from '@angular/forms';
 import { SharedService }   from '../shared/sharedService';
 import { BookingService }   from '../shared/booking.service';
 import { Booking }   from '../shared/booking.model';
+import { ToastsManager } from 'ng2-toastr/ng2-toastr';
+
 import * as moment from 'moment';
 
 @Component({
@@ -23,9 +25,17 @@ export class BookingComponent {
  isNew = true;
  bookingDate: any;
 
- constructor(private sharedService: SharedService, private bookingService: BookingService) {}
+ constructor(
+  private sharedService: SharedService,
+  private bookingService: BookingService,
+  private toastr: ToastsManager
+  ) {}
 
  addBooking(event: any, form: NgForm ): void {
+   if(!form.value.time || !form.value.duration ) {
+     this.toastr.error('Unable to book due to missing fields.');
+     return;
+   };
    const hour = parseInt(form.value.time.split(':')[0], 10)
    const minute = parseInt(form.value.time.split(':')[1], 10)
    let dateTime = moment(this.bookingDate)
@@ -41,7 +51,10 @@ export class BookingComponent {
     time: form.value.time,
     date: dateTime.toISOString(),
     duration: form.value.duration
-  }).then( booking => this.sharedService.addBooking(booking))
+  }).then( booking => {
+    this.toastr.success('Booking successfully created');
+    this.sharedService.addBooking(booking)
+  })
  }
 
  ngOnInit(): void {
