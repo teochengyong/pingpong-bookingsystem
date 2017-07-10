@@ -12,6 +12,6 @@
 
     <button *ngIf="isNew" md-raised-button (open)="Addbooking($event)" (click)="onClick($event, bookingForm)"class="md-fs-theme btn-main mat-raised-button">Book</button>
     <button *ngIf="!isNew" md-raised-button (open)="updateBooking($event)" (click)="updateBooking($event, bookingForm)"class="md-fs-theme btn-main mat-raised-button">Update</button>
-    <button *ngIf="!isNew" md-raised-button (open)="cancel($event)" (click)="cancel($event)"class="md-fs-theme btn-main mat-raised-button">Done</button>
+    <button *ngIf="!isNew" md-raised-button (open)="cancel($event)" (click)="cancel($event)"class="md-fs-theme btn-secondary mat-raised-button">Done</button>
   </form>
 </div>
