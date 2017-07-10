@@ -8,7 +8,7 @@
   <md-datepicker #picker startView="month" [startAt]="startDate"></md-datepicker>
   <md-list-item *ngFor='let booking of (bookings | orderByDate)'>
     <img md-list-avatar title='{{booking.name}}' class="avatar" src="static/icons/{{booking.avatar}}">
-    {{booking.name}} - {{booking.date | date:'shortTime'}}
+    {{booking.name}}, {{booking.date | date:'shortTime'}} - {{booking.endTime | date:'shortTime'}}
     <div class="action-containers">
       <a href="#" (click)="triggerEdit(booking)" class="action material-icons"
         aria-label="Update booking" title="Update booking">

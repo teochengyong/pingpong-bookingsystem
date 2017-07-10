@@ -4,6 +4,7 @@ import { BookingService }   from '../shared/booking.service';
 import { Booking }   from '../shared/booking.model';
 import { SortBy } from '../shared/sortBy';
 import * as moment from 'moment';
+import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 
 @Component({
   selector: 'app-booking-list',
@@ -15,9 +16,20 @@ export class BookingListComponent {
   displayDate: string;
   public bookingDate: Date = new Date();
   bookings: Booking[];
-  constructor(private sharedService: SharedService, private bookingService: BookingService ) {}
+  constructor(
+    private sharedService: SharedService,
+    private bookingService: BookingService,
+    private toastr: ToastsManager
+  ) {}
   getBookings(): void {
-    this.bookingService.getBookings().then(bookings => this.bookings = bookings);
+    this.bookingService.getBookings().then(bookings => {
+      bookings.map((booking) => {
+        booking.endTime = moment(booking.date)
+          .add(booking.duration, 'minutes')
+          .toISOString();
+      })
+      this.bookings = bookings;
+    });
   }
   ngOnInit(): void {
     this.sharedService.bookingSubject
@@ -52,6 +64,12 @@ export class BookingListComponent {
   }
 
   triggerEdit(booking: Booking): void {
+    let bookingDate = moment(booking.bookedDate);
+    let now = moment()
+    if( bookingDate.diff(now, 'minutes') > 2  ) {
+      this.toastr.error('Cannot edit booking which has been made more than 2 minutes ago.');
+      return;
+    }
     this.sharedService.editBooking(booking)
   }
 }

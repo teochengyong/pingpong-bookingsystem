@@ -4,5 +4,7 @@ export class Booking {
   duration: number;
   avatar: String;
   time: String;
-  startDateTime: string;
+  endTime: String;
+  date: string;
+  bookedDate: string;
 }

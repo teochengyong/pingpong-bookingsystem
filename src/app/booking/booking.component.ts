@@ -20,7 +20,9 @@ export class BookingComponent {
    avatar: 'man-01.svg',
    duration: 10,
    time: '08:00',
-   startDateTime: moment().toISOString()
+   endTime: moment().toISOString(),
+   date: moment().toISOString(),
+   bookedDate: moment().toISOString()
  };
  isNew = true;
  bookingDate: any;
@@ -45,12 +47,17 @@ export class BookingComponent {
      'second': 0,
      'millisecond': 0
    })
+   const date = dateTime.toISOString()
   this.bookingService.add({
     name: 'Tester',
     avatar: 'man-2.svg',
     time: form.value.time,
-    date: dateTime.toISOString(),
-    duration: form.value.duration
+    date: date,
+    duration: form.value.duration,
+    endTime: moment(date)
+          .add( form.value.duration, 'minutes')
+          .toISOString(),
+    bookedDate: moment().toISOString()
   }).then( booking => {
     this.toastr.success('Booking successfully created');
     this.sharedService.addBooking(booking)
@@ -71,7 +78,6 @@ export class BookingComponent {
   this.bookingService
     .update(Object.assign(this.booking, booking.value))
     .then( resBooking => {
-      console.log(resBooking)
       this.sharedService.editBookingList(booking);
     });
   };
