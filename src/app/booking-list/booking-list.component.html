@@ -1,0 +1,17 @@
+<md-list class="booking-list">
+  <h3>Bookings {{test}}</h3>
+  <md-input-container>
+    <input mdInput [mdDatepicker]="picker" [(ngModel)]="displayDate">
+    <button mdSuffix [mdDatepickerToggle]="picker"></button>
+  </md-input-container>
+  <button> Today </button>
+  <md-datepicker #picker startView="month" [startAt]="startDate"></md-datepicker>
+  <md-list-item *ngFor='let booking of bookings'>
+    <img md-list-avatar title='{{booking.name}}' class="avatar" src="static/icons/{{booking.avatar}}">
+    {{booking.name}} - {{booking.startTime}}
+    <a href="#" class="action material-icons"
+       aria-label="Delete booking" title="Delete booking">
+      delete
+    </a>
+  </md-list-item>
+<md-list>

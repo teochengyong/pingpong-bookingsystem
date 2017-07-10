@@ -1,0 +1,12 @@
+<div class="booking-form">
+  <form #bookingForm="ngForm">
+    <md-input-container>
+      <input mdInput type="time" placeholder="Time" name="time" ngModel>
+    </md-input-container>
+    <md-input-container>
+      <input mdInput type="number" min="10" max="60" step="5" placeholder="Duration" name="duration" ngModel>
+    </md-input-container>
+    minutes
+    <button md-raised-button (open)="Addbooking($event)" (click)="onClick($event, bookingForm)"class="md-fs-theme btn-main mat-raised-button">Book</button>
+  </form>
+</div>

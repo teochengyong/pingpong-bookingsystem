@@ -1,0 +1,22 @@
+:host {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  bottom: 0;
+  position: absolute;
+  align-items: center;
+  justify-content: center;
+}
+
+.booking-form {
+  display: flex;
+  width: 500px;
+}
+
+form label {
+  width: 50px;
+}
+
+form label::after {
+  content: ':';
+}

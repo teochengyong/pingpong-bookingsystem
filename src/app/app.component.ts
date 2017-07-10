@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
-import { NavComponent }  from './core/nav/nav.component';
-
+import { SharedService } from './shared/sharedService';
 export class Hero {
   id: number;
   name: string;
@@ -8,12 +7,14 @@ export class Hero {
 
 @Component({
   selector: 'my-app',
-  templateUrl: './app.component.html'
+  templateUrl: './app.component.html',
+  providers: [SharedService]
 })
 export class AppComponent {
-  title = 'Tour of Heroes';
-  hero: Hero = {
-    id: 1,
-    name: 'Windstorm'
-  };
+ constructor(private sharedService: SharedService) {
+   this.sharedService.bookingSubject.subscribe((booking: any) => {
+    console.log('Received booking in app.component');
+    console.log(booking);
+   });
+ }
 }
