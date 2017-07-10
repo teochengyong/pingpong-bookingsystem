@@ -2,7 +2,6 @@ import { Component} from '@angular/core';
 import { SharedService }   from '../shared/sharedService';
 import { BookingService }   from '../shared/booking.service';
 import { Booking }   from '../shared/booking.model';
-// import { Subscription } from 'rxjs/Subscription';
 import * as moment from 'moment';
 
 @Component({
@@ -20,11 +19,11 @@ export class BookingListComponent {
     this.bookingService.getBookings().then(bookings => this.bookings = bookings);
   }
   ngOnInit(): void {
-    // this.sharedService.bookingSubject
-    //   .subscribe((booking) => {
-    //     console.log('We are at booking list');
-    //     this.bookings.push(booking);
-    //   });
+    this.sharedService.bookingSubject
+      .subscribe((booking) => {
+        console.log('We are at booking list');
+        this.bookings.push(booking);
+      });
     this.getBookings();
     this.displayDate = moment().format('YYYY-MM-DD');
   }
