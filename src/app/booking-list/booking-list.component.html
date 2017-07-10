@@ -8,10 +8,16 @@
   <md-datepicker #picker startView="month" [startAt]="startDate"></md-datepicker>
   <md-list-item *ngFor='let booking of bookings'>
     <img md-list-avatar title='{{booking.name}}' class="avatar" src="static/icons/{{booking.avatar}}">
-    {{booking.name}} - {{booking.startTime}}
-    <a href="#" (click)="delete(booking)" class="action material-icons"
-       aria-label="Delete booking" title="Delete booking">
-      delete
-    </a>
+    {{booking.name}} - {{booking.time}}
+    <div class="action-containers">
+      <a href="#" (click)="triggerEdit(booking)" class="action material-icons"
+        aria-label="Update booking" title="Update booking">
+        edit
+      </a>
+      <a href="#" (click)="delete(booking)" class="action material-icons"
+        aria-label="Delete booking" title="Delete booking">
+        delete
+      </a>
+    </div>
   </md-list-item>
 <md-list>

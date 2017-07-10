@@ -43,4 +43,15 @@ export class BookingService {
       .then(() => null)
       .catch(this.handleError)
   }
+
+  update(booking: Booking): Promise<Booking> {
+    const url = `${this.bookingsUrl}/${booking.id}}`;
+
+    return this.http
+      .put(url, JSON.stringify(booking), {headers: this.headers})
+      .toPromise()
+      .then( res => booking)
+      .catch(this.handleError);
+
+  }
 }

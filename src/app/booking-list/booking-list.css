@@ -12,10 +12,14 @@
   content:url('./static/icons/boy-1.svg')
 }
 
+.action-containers {
+  margin-left: auto;
+  margin-right: 16px;
+}
+
 a.action {
   text-decoration: none;
   width: 24px;
   height: 24px;
-  margin-left: auto;
-  margin-right: 16px;
+  margin-right: 5px;
 }

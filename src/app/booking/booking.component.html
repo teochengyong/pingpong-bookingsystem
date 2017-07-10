@@ -1,12 +1,17 @@
 <div class="booking-form">
   <form #bookingForm="ngForm">
+    <div *ngIf="!isNew">{{booking.name}}'s Booking</div>
+    <div *ngIf="isNew">New Booking</div>
     <md-input-container>
-      <input mdInput type="time" placeholder="Time" name="time" ngModel>
+      <input mdInput type="time" placeholder="Time" name="time" value={{booking.time}} ngModel>
     </md-input-container>
     <md-input-container>
-      <input mdInput type="number" min="10" max="60" step="5" placeholder="Duration" name="duration" ngModel>
+      <input mdInput type="number" min="10" max="60" step="5" placeholder="Duration" name="duration" value={{booking.duration}}  ngModel>
     </md-input-container>
     minutes
-    <button md-raised-button (open)="Addbooking($event)" (click)="onClick($event, bookingForm)"class="md-fs-theme btn-main mat-raised-button">Book</button>
+
+    <button *ngIf="isNew" md-raised-button (open)="Addbooking($event)" (click)="onClick($event, bookingForm)"class="md-fs-theme btn-main mat-raised-button">Book</button>
+    <button *ngIf="!isNew" md-raised-button (open)="updateBooking($event)" (click)="updateBooking($event, bookingForm)"class="md-fs-theme btn-main mat-raised-button">Update</button>
+    <button *ngIf="!isNew" md-raised-button (open)="cancel($event)" (click)="cancel($event)"class="md-fs-theme btn-main mat-raised-button">Done</button>
   </form>
 </div>

@@ -24,6 +24,8 @@ export class BookingListComponent {
         console.log('We are at booking list');
         this.bookings.push(booking);
       });
+    this.sharedService.editBookingListSubject
+      .subscribe((booking) => this.update(booking));
     this.getBookings();
     this.displayDate = moment().format('YYYY-MM-DD');
   }
@@ -33,6 +35,19 @@ export class BookingListComponent {
       .delete(booking.id)
       .then( () => {
         this.bookings = this.bookings.filter( reservation => reservation !== booking);
-      })
+      });
+  }
+
+  update(booking: Booking): void {
+    console.log('update book listing')
+    this.bookings = this.bookings
+      .map( reservation => reservation.id === booking.id
+        ? booking
+        : reservation
+      )
+  }
+
+  triggerEdit(booking: Booking): void {
+    this.sharedService.editBooking(booking)
   }
 }

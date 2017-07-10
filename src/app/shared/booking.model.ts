@@ -1,7 +1,6 @@
 export class Booking {
-  id: number;
   name: String;
   duration: number;
   avatar: String;
-  startTime: String;
+  time: String;
 }

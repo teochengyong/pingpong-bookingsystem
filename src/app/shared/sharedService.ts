@@ -4,10 +4,20 @@ import { Subject } from 'rxjs/Subject';
 @Injectable()
 export class SharedService {
  public bookingSubject: Subject<any> = new Subject();
+ public editBookingSubject: Subject<any> = new Subject();
+ public editBookingListSubject: Subject<any> = new Subject();
  constructor () {}
-//  public bookObservable: Observable<any> = this.bookingSource.asObservable()
  addBooking(booking: any) {
-  console.log(booking)
+  console.log(booking);
   this.bookingSubject.next(booking);
+ }
+
+ editBooking(booking: any) {
+  this.editBookingSubject.next(booking);
+ }
+
+ editBookingList(booking: any ) {
+   console.log('editBookingList');
+   this.editBookingListSubject.next(booking);
  }
 }
