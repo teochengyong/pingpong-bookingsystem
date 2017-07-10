@@ -119,6 +119,5 @@ export class BookingComponent {
   cancel(event: any): void {
     this.isNew = true;
     this.booking.duration = 10;
-    this.booking.time = '08:00';
   }
 }
