@@ -34,4 +34,13 @@ export class BookingService {
       })
       .catch(this.handleError);
   }
+
+  delete(id: number): Promise<Booking> {
+    const url = `${this.bookingsUrl}/${id}}`;
+    return this.http
+      .delete(url)
+      .toPromise()
+      .then(() => null)
+      .catch(this.handleError)
+  }
 }

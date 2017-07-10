@@ -27,4 +27,12 @@ export class BookingListComponent {
     this.getBookings();
     this.displayDate = moment().format('YYYY-MM-DD');
   }
+
+  delete(booking: Booking): void {
+    this.bookingService
+      .delete(booking.id)
+      .then( () => {
+        this.bookings = this.bookings.filter( reservation => reservation !== booking);
+      })
+  }
 }
