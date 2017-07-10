@@ -19,13 +19,13 @@ export class BookingComponent {
    name: 'Tester',
    avatar: 'man-01.svg',
    duration: 10,
-   time: '08:00',
    endTime: moment().toISOString(),
    date: moment().toISOString(),
    bookedDate: moment().toISOString()
  };
  isNew = true;
  bookingDate: any;
+ bookings: Booking[];
 
  constructor(
   private sharedService: SharedService,
@@ -38,11 +38,14 @@ export class BookingComponent {
      return;
    };
 
-  const date =this.getBookingDate(form);
+   if (this.validateOverlappedBooking() ) {
+    return;
+   }
+
+  const date = this.getBookingDate(form);
   this.bookingService.add({
     name: 'Tester',
     avatar: 'man-2.svg',
-    time: form.value.time,
     date: date,
     duration: form.value.duration,
     endTime: this.getEndTime(date, form.value.duration),
@@ -60,6 +63,9 @@ export class BookingComponent {
   });
   this.sharedService.bookingDateChangedBroadcast.subscribe(date => {
     this.bookingDate = date;
+  });
+  this.sharedService.bookingListChangedBroadcast.subscribe(bookings => {
+    this.bookings = bookings;
   });
  }
 
@@ -101,6 +107,12 @@ export class BookingComponent {
       this.toastr.error('Unable to book due to missing fields.');
       return false;
     };
+    return true;
+  }
+
+  private validateOverlappedBooking(): boolean {
+    console.log('Overlapped Bookings');
+    console.log(this.bookings);
     return true;
   }
 

@@ -27,8 +27,9 @@ export class BookingListComponent {
         booking.endTime = moment(booking.date)
           .add(booking.duration, 'minutes')
           .toISOString();
-      })
+      });
       this.bookings = bookings;
+      this.sharedService.bookingListChangedBroadcast.next(this.bookings);
     });
   }
   ngOnInit(): void {
@@ -37,6 +38,7 @@ export class BookingListComponent {
         const sortBy = new SortBy();
         this.bookings.push(booking);
         this.bookings = sortBy.orderByDate(this.bookings);
+        this.sharedService.bookingListChangedBroadcast.next(this.bookings);
       });
     this.sharedService.editBookingListSubject
       .subscribe((booking) => this.update(booking));
