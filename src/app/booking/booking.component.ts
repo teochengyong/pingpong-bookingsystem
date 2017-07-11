@@ -2,7 +2,7 @@ import { Component} from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { SharedService }   from '../shared/sharedService';
 import { BookingService }   from '../shared/booking.service';
-import { Booking }   from '../shared/booking.model';
+import { Booking, ValidateOverlappedBookingOption }   from '../shared/booking.model';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 import { User } from '../shared/User';
 
@@ -81,7 +81,7 @@ export class BookingComponent {
 
   const date = this.getBookingDate(booking);
   const endTime = this.getEndTime(date, booking.value.duration)
-  if (!this.validateOverlappedBooking(date, endTime) ) {
+  if (!this.validateOverlappedBooking(date, endTime, { ignore: this.booking}) ) {
   return;
   }
   this.booking.date = date;
@@ -92,6 +92,7 @@ export class BookingComponent {
     .then( resBooking => {
       this.sharedService.editBookingList(resBooking);
     });
+  this.toastr.success('Successfully updated booking.');
   };
 
   private getBookingDate(booking: NgForm): string {
@@ -120,11 +121,15 @@ export class BookingComponent {
     return true;
   }
 
-  private validateOverlappedBooking(start: string, end: string): boolean {
+  private validateOverlappedBooking(start: string, end: string, option?: ValidateOverlappedBookingOption ): boolean {
 
     let startTime = moment(start);
     let endTime = moment(end);
-    for( let booking of this.bookings ) {
+    let reservations = this.bookings.slice(0)
+    if (option && option.ignore) {
+      reservations = reservations.filter((reservation) => option.ignore.id !== reservation.id )
+    }
+    for( let booking of reservations ) {
       const bookingStartTime = moment(booking.date)
       const bookingEndTime = moment(booking.endTime)
       // Overlaps booking start time
@@ -171,6 +176,5 @@ export class BookingComponent {
 
   cancel(event: any): void {
     this.isNew = true;
-    this.booking.duration = 10;
   }
 }

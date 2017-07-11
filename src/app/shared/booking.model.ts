@@ -8,3 +8,7 @@ export class Booking {
   date: string;
   bookedDate: string;
 }
+
+export interface ValidateOverlappedBookingOption {
+  ignore: Booking;
+}
