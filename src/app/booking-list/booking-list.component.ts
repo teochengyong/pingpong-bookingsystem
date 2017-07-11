@@ -69,7 +69,7 @@ export class BookingListComponent {
   triggerEdit(booking: Booking): void {
     let bookingDate = moment(booking.bookedDate);
     let now = moment()
-    if ( now.diff(bookingDate, 'seconds') > 5  ) {
+    if ( now.diff(bookingDate, 'minutes') > 2  ) {
       this.toastr.error('Cannot edit booking which has been made more than 2 minutes ago.');
       return;
     }
