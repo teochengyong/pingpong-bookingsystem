@@ -4,7 +4,7 @@ import { SharedService }   from '../shared/sharedService';
 import { BookingService }   from '../shared/booking.service';
 import { Booking, ValidateOverlappedBookingOption }   from '../shared/booking.model';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
-import { User } from '../shared/User';
+import { User } from '../shared/user';
 
 import * as moment from 'moment';
 

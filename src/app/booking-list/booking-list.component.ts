@@ -5,7 +5,7 @@ import { Booking }   from '../shared/booking.model';
 import { SortBy } from '../shared/sortBy';
 import * as moment from 'moment';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
-import { User } from '../shared/User';
+import { User } from '../shared/user';
 
 @Component({
   selector: 'app-booking-list',
