@@ -4,6 +4,7 @@
   "private": true,
   "description": "Assigment for funding societies",
   "scripts": {
+    "heroku-postbuild": "npm run build",
     "test:once": "karma start karma.conf.js --single-run",
     "build": "tsc -p src/",
     "serve": "lite-server -c=bs-config.json",
