@@ -9,7 +9,7 @@
   <!--<md-datepicker #picker startView="month" [startAt]="startDate"></md-datepicker>-->
   <md-list-item *ngFor='let booking of (bookings | orderByDate)'>
     <img md-list-avatar title='{{booking.name}}' class="avatar" src="static/icons/{{booking.avatar}}">
-      {{booking.date | date:'shortTime'}} - {{booking.endTime | date:'shortTime'}} - {{booking.name}}
+      {{booking.date | date:'shortTime'}} - {{booking.endTime | date:'shortTime'}} - {{booking.name}} ({{booking.duration}} minutes)
     <div class="action-containers">
       <a href="#" *ngIf='booking.userId === this.user.Id' (click)="triggerEdit(booking)" class="action material-icons"
         aria-label="Update booking" title="Update booking">

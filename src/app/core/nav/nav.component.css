@@ -17,3 +17,12 @@
   margin-top: 5px;
   padding-right: 20px;
 }
+
+.userName {
+  font-size: 15px;
+  margin-right: 5px;
+}
+.userPhoto {
+  width: 24px;
+  height: 24px;
+}

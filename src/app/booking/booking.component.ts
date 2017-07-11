@@ -19,8 +19,8 @@ export class BookingComponent {
  booking: Booking = {
    id: 0,
    userId: this.user.Id,
-   name: 'Tester',
-   avatar: 'man-01.svg',
+   name: this.user.name,
+   avatar: this.user.avatar,
    duration: 10,
    endTime: moment().toISOString(),
    date: moment().toISOString(),

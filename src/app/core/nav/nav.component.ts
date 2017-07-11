@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { User } from '../../shared/User';
 
 @Component({
   selector: 'app-core-nav',
@@ -6,4 +7,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./nav.component.css']
 })
 
-export class NavComponent{}
+export class NavComponent{
+  user = new User();
+}
