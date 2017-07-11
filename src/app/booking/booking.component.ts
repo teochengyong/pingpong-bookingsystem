@@ -79,9 +79,14 @@ export class BookingComponent {
      return;
   };
 
-  this.booking.date = this.getBookingDate(booking);
+  const date = this.getBookingDate(booking);
+  const endTime = this.getEndTime(date, booking.value.duration)
+  if (!this.validateOverlappedBooking(date, endTime) ) {
+  return;
+  }
+  this.booking.date = date;
   this.booking.duration = booking.value.duration;
-  this.booking.endTime = this.getEndTime(this.booking.date, booking.value.duration);
+  this.booking.endTime = endTime;
   this.bookingService
     .update(this.booking)
     .then( resBooking => {

@@ -5,6 +5,7 @@ import { Booking }   from '../shared/booking.model';
 import { SortBy } from '../shared/sortBy';
 import * as moment from 'moment';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
+import { User } from '../shared/User';
 
 @Component({
   selector: 'app-booking-list',
@@ -13,6 +14,7 @@ import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 })
 
 export class BookingListComponent {
+  user = new User();
   displayDate: string;
   public bookingDate: Date = new Date();
   bookings: Booking[];

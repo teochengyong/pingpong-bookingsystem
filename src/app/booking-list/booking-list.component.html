@@ -11,11 +11,11 @@
     <img md-list-avatar title='{{booking.name}}' class="avatar" src="static/icons/{{booking.avatar}}">
       {{booking.date | date:'shortTime'}} - {{booking.endTime | date:'shortTime'}} - {{booking.name}}
     <div class="action-containers">
-      <a href="#" (click)="triggerEdit(booking)" class="action material-icons"
+      <a href="#" *ngIf='booking.userId === this.user.Id' (click)="triggerEdit(booking)" class="action material-icons"
         aria-label="Update booking" title="Update booking">
         edit
       </a>
-      <a href="#" (click)="delete(booking)" class="action material-icons"
+      <a href="#" *ngIf='booking.userId === this.user.Id' (click)="delete(booking)" class="action material-icons"
         aria-label="Delete booking" title="Delete booking">
         delete
       </a>
