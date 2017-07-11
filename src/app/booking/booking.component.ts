@@ -4,6 +4,7 @@ import { SharedService }   from '../shared/sharedService';
 import { BookingService }   from '../shared/booking.service';
 import { Booking }   from '../shared/booking.model';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
+import { User } from '../shared/User';
 
 import * as moment from 'moment';
 
@@ -14,9 +15,10 @@ import * as moment from 'moment';
 })
 
 export class BookingComponent {
+ user = new User();
  booking: Booking = {
    id: 0,
-   userId: 99,
+   userId: this.user.Id,
    name: 'Tester',
    avatar: 'man-01.svg',
    duration: 10,
@@ -28,7 +30,6 @@ export class BookingComponent {
  bookingDate: any;
  bookings: Booking[];
  private timeFormat = 'h:mm:a';
- private userId = 99; // Simulate a real user
 
  constructor(
   private sharedService: SharedService,
@@ -53,7 +54,7 @@ export class BookingComponent {
     duration: form.value.duration,
     endTime: this.getEndTime(date, form.value.duration),
     bookedDate: moment().toISOString(),
-    userId: this.userId
+    userId: this.user.Id
   }).then( booking => {
     this.toastr.success('Booking successfully created');
     this.sharedService.addBooking(booking)
@@ -139,7 +140,7 @@ export class BookingComponent {
         return false;
       }
 
-      if (booking.userId === this.userId) {
+      if (booking.userId === this.user.Id) {
         // 1 hour before current user's booking
         let currentBookingEndTimeWithOneHourExtra = moment(endTime).add(1, 'hours')
         if ( startTime < bookingStartTime && currentBookingEndTimeWithOneHourExtra > bookingStartTime ) {
