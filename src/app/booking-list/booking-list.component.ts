@@ -53,6 +53,7 @@ export class BookingListComponent {
       .delete(booking.id)
       .then( () => {
         this.bookings = this.bookings.filter( reservation => reservation !== booking);
+        this.sharedService.bookingListChangedBroadcast.next(this.bookings);
       });
   }
 

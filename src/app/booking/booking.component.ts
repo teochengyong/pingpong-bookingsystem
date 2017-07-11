@@ -16,6 +16,7 @@ import * as moment from 'moment';
 export class BookingComponent {
  booking: Booking = {
    id: 0,
+   userId: 99,
    name: 'Tester',
    avatar: 'man-01.svg',
    duration: 10,
@@ -26,6 +27,8 @@ export class BookingComponent {
  isNew = true;
  bookingDate: any;
  bookings: Booking[];
+ private timeFormat = 'h:mm:a';
+ private userId = 99; // Simulate a real user
 
  constructor(
   private sharedService: SharedService,
@@ -38,18 +41,19 @@ export class BookingComponent {
      return;
    };
 
-   if (this.validateOverlappedBooking() ) {
+  const date = this.getBookingDate(form);
+  const endTime = this.getEndTime(date, form.value.duration)
+   if (!this.validateOverlappedBooking(date, endTime) ) {
     return;
    }
-
-  const date = this.getBookingDate(form);
   this.bookingService.add({
-    name: 'Tester',
+    name: 'Beardy Tester',
     avatar: 'man-2.svg',
     date: date,
     duration: form.value.duration,
     endTime: this.getEndTime(date, form.value.duration),
-    bookedDate: moment().toISOString()
+    bookedDate: moment().toISOString(),
+    userId: this.userId
   }).then( booking => {
     this.toastr.success('Booking successfully created');
     this.sharedService.addBooking(booking)
@@ -110,9 +114,52 @@ export class BookingComponent {
     return true;
   }
 
-  private validateOverlappedBooking(): boolean {
-    console.log('Overlapped Bookings');
-    console.log(this.bookings);
+  private validateOverlappedBooking(start: string, end: string): boolean {
+
+    let startTime = moment(start);
+    let endTime = moment(end);
+    for( let booking of this.bookings ) {
+      const bookingStartTime = moment(booking.date)
+      const bookingEndTime = moment(booking.endTime)
+      // Overlaps booking start time
+      if ( startTime < bookingStartTime && endTime > bookingStartTime ) {
+        this.toastr.error(`The booking end time overlapped with a booking that starts at ${bookingStartTime.format(this.timeFormat)}`);
+        return false;
+      }
+      // Overlaps booking end time
+      if ( startTime < bookingEndTime && endTime > bookingEndTime) {
+        this.toastr.error(`The booking start time overlapped with a booking that ends at ${bookingEndTime.format(this.timeFormat)}`);
+        return false;
+      }
+      // Within booking period
+      if ( startTime >= bookingStartTime && endTime <= bookingEndTime) {
+        this.toastr.error(`
+        The booking overlapped with a current booking that starts at ${bookingStartTime.format(this.timeFormat)} and
+        ends at ${bookingEndTime.format(this.timeFormat)}`);
+        return false;
+      }
+
+      if (booking.userId === this.userId) {
+        // 1 hour before current user's booking
+        let currentBookingEndTimeWithOneHourExtra = moment(endTime).add(1, 'hours')
+        if ( startTime < bookingStartTime && currentBookingEndTimeWithOneHourExtra > bookingStartTime ) {
+          this.toastr.error(`
+            The booking must have a gap of an hour with your booking that starts at ${bookingStartTime.format(this.timeFormat)}
+          `);
+          return false;
+        }
+
+        // 1 after current user's booking
+        let bookingEndTimeWithOneHourExtra = moment(bookingEndTime).add(1, 'hours')
+        if ( startTime > bookingEndTime && bookingEndTimeWithOneHourExtra > startTime ) {
+          this.toastr.error(`
+            The booking must have a gap of an hour with your booking that ends at ${bookingEndTime.format(this.timeFormat)}
+          `);
+          return false;
+        }
+      }
+    }
+
     return true;
   }
 
