@@ -23,3 +23,7 @@ a.action {
   height: 24px;
   margin-right: 5px;
 }
+
+h3,h4 {
+  padding-left: 20px;
+}
