@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { User } from '../../shared/User';
+import { User } from '../../shared/user';
 
 @Component({
   selector: 'app-core-nav',
