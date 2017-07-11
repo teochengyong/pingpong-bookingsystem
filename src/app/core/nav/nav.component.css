@@ -1,3 +1,8 @@
+.toolbar {
+  position:fixed;
+  top:0px;
+  z-index: 1;
+}
 .action-container {
  display: flex;
  justify-content: flex-end;
@@ -25,4 +30,14 @@
 .userPhoto {
   width: 24px;
   height: 24px;
+}
+
+@media only screen and (max-width: 768px) {
+    .toolbar {
+      width: 100%;
+    }
+
+    .title {
+      font-size: 18px;
+    }
 }

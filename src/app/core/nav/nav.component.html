@@ -1,9 +1,10 @@
-<md-toolbar class="app-toolbar mat-toolbar mat-primary">
+<md-toolbar class="app-toolbar mat-primary toolbar">
   <a href="/" class="nav-link home">
     <img title="home" src="static/logos/TableTennis.svg">
-  </a>Ping Pong Booking System
+  </a>
+  <span class="title">Ping Pong Booking System</span>
   <section class="action-container">
-    <h4 class="userName">Hello, {{user.name}}</h4>
+    <h4 class="userName">{{user.name}}</h4>
     <img class="userPhoto" src="../static/icons/{{user.avatar}}" alt="{{user.name}}">
     <!--<button md-raised-button class="md-fs-theme btn-main mat-raised-button">Book</button>-->
   </section>
