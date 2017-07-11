@@ -84,7 +84,7 @@ export class BookingComponent {
   this.bookingService
     .update(this.booking)
     .then( resBooking => {
-      this.sharedService.editBookingList(booking);
+      this.sharedService.editBookingList(resBooking);
     });
   };
 
@@ -100,7 +100,7 @@ export class BookingComponent {
     return dateTime.toISOString()
   }
 
-  private getEndTime(date:string, duration: number ): string {
+  private getEndTime(date: string, duration: number ): string {
     return moment(date)
           .add( duration, 'minutes')
           .toISOString()

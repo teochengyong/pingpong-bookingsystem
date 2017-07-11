@@ -1,11 +1,12 @@
 <md-list class="booking-list">
-  <h3>Bookings {{test}}</h3>
-  <md-input-container>
+  <h3>Today's Bookings</h3>
+  <h4>{{bookingDate | date:'longDate'}}</h4>
+  <!--<md-input-container>
     <input mdInput [mdDatepicker]="picker" [(ngModel)]="displayDate">
     <button mdSuffix [mdDatepickerToggle]="picker"></button>
-  </md-input-container>
-  <button> Today </button>
-  <md-datepicker #picker startView="month" [startAt]="startDate"></md-datepicker>
+  </md-input-container>-->
+  <!--<button> Today </button>-->
+  <!--<md-datepicker #picker startView="month" [startAt]="startDate"></md-datepicker>-->
   <md-list-item *ngFor='let booking of (bookings | orderByDate)'>
     <img md-list-avatar title='{{booking.name}}' class="avatar" src="static/icons/{{booking.avatar}}">
       {{booking.date | date:'shortTime'}} - {{booking.endTime | date:'shortTime'}} - {{booking.name}}
