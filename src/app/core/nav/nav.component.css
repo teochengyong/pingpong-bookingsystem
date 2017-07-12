@@ -32,7 +32,14 @@
   height: 24px;
 }
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 380px) {
+    .title {
+      font-size: 13px;
+    }
+}
+
+
+@media only screen and (min-width: 768px) {
     .toolbar {
       width: 100%;
     }
