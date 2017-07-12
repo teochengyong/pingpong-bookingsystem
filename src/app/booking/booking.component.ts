@@ -114,6 +114,11 @@ export class BookingComponent {
   }
 
   private validateBooking(booking: NgForm): boolean {
+    if(booking.value.duration < 10 || booking.value.duration > 60  ) {
+      this.toastr.error('Please book within 10 to 60 minutes.');
+      return false;
+    };
+
     if(!booking.value.time || !booking.value.duration ) {
       this.toastr.error('Unable to book due to missing fields.');
       return false;
