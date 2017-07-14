@@ -18,9 +18,5 @@ export class AppComponent {
    public toastr: ToastsManager,
    vcr: ViewContainerRef) {
     this.toastr.setRootViewContainerRef(vcr);
-    this.sharedService.bookingSubject.subscribe((booking: any) => {
-      console.log('Received booking in app.component');
-      console.log(booking);
-    });
  }
 }

@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { RouterModule } from '@angular/router';
 import {
   MdButtonModule,
   MdCheckboxModule,
@@ -23,15 +24,33 @@ import { NavComponent }  from './core/nav/nav.component';
 import { AppComponent }  from './app.component';
 import { BookingListComponent }  from './booking-list/booking-list.component';
 import { BookingComponent }  from './booking/booking.component';
+import { BookingsComponent }  from './bookings/bookings.component';
+import { LoginComponent }  from './login/login.component';
 
 import { BookingService } from './shared/booking.service';
 
 import { OrderByDatePipe } from './shared/orderByDate.pipe';
 
+
 @NgModule({
   imports: [
     BrowserModule,
     FormsModule, // <-- import the FormsModule before binding with [(ngModel)]
+    RouterModule.forRoot([
+      {
+        path: 'Bookings',
+        component: BookingsComponent
+      },
+      {
+        path: '',
+        redirectTo: '/Bookings',
+        pathMatch: 'full',
+      },
+      {
+        path: 'Login',
+        component: LoginComponent,
+      }
+    ]),
     MdButtonModule,
     MdCheckboxModule,
     MdToolbarModule,
@@ -50,6 +69,8 @@ import { OrderByDatePipe } from './shared/orderByDate.pipe';
     NavComponent,
     BookingListComponent,
     BookingComponent,
+    BookingsComponent,
+    LoginComponent,
     OrderByDatePipe
   ],
   providers: [ BookingService ],
