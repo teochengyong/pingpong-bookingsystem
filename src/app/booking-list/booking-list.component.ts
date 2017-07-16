@@ -61,22 +61,22 @@ export class BookingListComponent {
   }
 
   update(booking: Booking): void {
-    console.log('update book listing')
+    console.log('update book listing');
     this.bookings = this.bookings
       .map( reservation => reservation.id === booking.id
         ? booking
         : reservation
-      )
+      );
   }
 
   triggerEdit(event: Event, booking: Booking): void {
     event.preventDefault();
     let bookingDate = moment(booking.bookedDate);
-    let now = moment()
+    let now = moment();
     if ( now.diff(bookingDate, 'minutes') > 2  ) {
       this.toastr.error('Cannot edit booking which has been made more than 2 minutes ago.');
       return;
     }
-    this.sharedService.editBooking(booking)
+    this.sharedService.editBooking(booking);
   }
 }
