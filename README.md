@@ -30,6 +30,7 @@ Bookings are sorted according to time even for newly added booking.
 - Suggest some slots that the user can create.
 - User cannot book time slot that is already over.
 - A weekly, or monthly view can be created so that the user can navigate easily across different bookings.
+- Adding password as a criteria for login
 
 # Technical improvement
 Test cases can be written to run the scenarios for each booking condition.
