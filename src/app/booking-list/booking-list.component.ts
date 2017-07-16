@@ -44,6 +44,8 @@ export class BookingListComponent {
       });
     this.sharedService.editBookingListSubject
       .subscribe((booking) => this.update(booking));
+    this.sharedService.userChangedBroadcast
+      .subscribe((user) => this.user = user);
 
     this.sharedService.bookingDateChangedBroadcast.next(this.bookingDate);
     this.getBookings();

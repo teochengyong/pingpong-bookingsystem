@@ -9,6 +9,7 @@ export class SharedService {
   public editBookingListSubject: Subject<any> = new Subject();
   public bookingDateChangedBroadcast: Subject<any> = new ReplaySubject();
   public bookingListChangedBroadcast: Subject<any> = new ReplaySubject();
+  public userChangedBroadcast: Subject<any> = new Subject();
 
   constructor() { }
   addBooking(booking: any) {
@@ -32,5 +33,10 @@ export class SharedService {
   bookingListChanged(bookings: any) {
     console.log('bookingDateChanged');
     this.bookingListChangedBroadcast.next(bookings);
+  }
+
+  userChanged(user: any ) {
+    console.log('userChanged');
+    this.userChangedBroadcast.next(user);
   }
 }

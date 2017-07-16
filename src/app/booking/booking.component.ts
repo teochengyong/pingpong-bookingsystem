@@ -18,7 +18,7 @@ export class BookingComponent {
  user = new User();
  booking: Booking = {
    id: 0,
-   userId: this.user.Id,
+   userId: this.user.id,
    name: this.user.name,
    avatar: this.user.avatar,
    duration: 10,
@@ -48,13 +48,13 @@ export class BookingComponent {
     return;
    }
   this.bookingService.add({
-    name: 'Beardy Tester',
-    avatar: 'man-2.svg',
+    name: this.user.name,
+    avatar: this.user.avatar,
     date: date,
     duration: form.value.duration,
     endTime: this.getEndTime(date, form.value.duration),
     bookedDate: moment().toISOString(),
-    userId: this.user.Id
+    userId: this.user.id
   }).then( booking => {
     this.toastr.success('Booking successfully created');
     this.sharedService.addBooking(booking);
@@ -71,6 +71,9 @@ export class BookingComponent {
   });
   this.sharedService.bookingListChangedBroadcast.subscribe(bookings => {
     this.bookings = bookings;
+  });
+  this.sharedService.userChangedBroadcast.subscribe(user => {
+    this.user = user;
   });
  }
 
@@ -155,7 +158,7 @@ export class BookingComponent {
         return false;
       }
 
-      if (booking.userId === this.user.Id) {
+      if (booking.userId === this.user.id) {
         // 1 hour before current user's booking
         let currentBookingEndTimeWithOneHourExtra = moment(endTime).add(1, 'hours');
         if ( startTime < bookingStartTime && currentBookingEndTimeWithOneHourExtra > bookingStartTime ) {
@@ -167,7 +170,7 @@ export class BookingComponent {
 
         // 1 after current user's booking
         let bookingEndTimeWithOneHourExtra = moment(bookingEndTime).add(1, 'hours');
-        if ( startTime > bookingEndTime && bookingEndTimeWithOneHourExtra > startTime ) {
+        if ( startTime >= bookingEndTime && bookingEndTimeWithOneHourExtra >= startTime ) {
           this.toastr.error(`
             The booking must have a gap of an hour with your booking that ends at ${bookingEndTime.format(this.timeFormat)}
           `);
