@@ -37,6 +37,22 @@ export class LoginComponent {
     });
   }
 
+  signup(event: Event, form: NgForm): void {
+    event.preventDefault()
+    const avatars = [
+      'boy-1.svg', 'boy.svg', 'girl-1.svg', 'girl.svg', 'man-1.svg',
+      'man-2.svg', 'man-3.svg', 'man-4.svg', 'man.svg'
+    ];
+    this.userService.add({
+      name: form.value.name.trim(),
+      avatar: avatars[parseInt((Math.random() * 9).toFixed(0), 10)]
+    }).then( usr => {
+      this.toastr.success(`User with the name, ${usr.name} created successfully.`);
+    }).catch((error) => {
+      this.toastr.error(error.message);
+    });
+  }
+
   close(event?: Event): void {
     if (event) {
       event.preventDefault();

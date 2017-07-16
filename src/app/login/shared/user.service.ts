@@ -44,13 +44,24 @@ export class UserService {
   add(user: object): Promise<User> {
     // Generate new salt and hash the password with the salt
     // Store the salt and hash
-    return this.http
-      .post(this.usersUrl, JSON.stringify(user), { headers: this.headers})
-      .toPromise()
-      .then( res => {
-        return res.json().data as User;
-      })
-      .catch(this.handleError);
+    return new Promise((resolve, reject) => {
+      this.getUsers().then((users: User[]) => {
+        let curUser: User[] = users.filter( usr => usr.name === user.name)
+        if (curUser.length === 0) {
+          this.http
+          .post(this.usersUrl, JSON.stringify(user), { headers: this.headers})
+          .toPromise()
+          .then( res => {
+            resolve(res.json().data as User);
+          })
+          .catch(this.handleError)
+        } else {
+          reject({
+            message: 'A user with the same has been found.'
+          });
+        }
+      });
+    });
   }
 }
 
