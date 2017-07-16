@@ -9,6 +9,7 @@ import {
   MdDatepickerModule,
   MdNativeDateModule,
   MdMenuModule,
+  MdDialogModule
 } from '@angular/material';
 
 import { HttpModule } from '@angular/http';
@@ -27,6 +28,7 @@ import { AppComponent }  from './app.component';
 import { BookingListComponent }  from './booking-list/booking-list.component';
 import { BookingComponent }  from './booking/booking.component';
 import { BookingsComponent }  from './bookings/bookings.component';
+import { BookingDialogComponent }  from './booking-dialog/booking-dialog.component';
 import { LoginComponent }  from './login/login.component';
 
 import { BookingService } from './shared/booking.service';
@@ -50,7 +52,8 @@ import { OrderByDatePipe } from './shared/orderByDate.pipe';
     HttpModule,
     InMemoryWebApiModule.forRoot(InMemoryDataService),
     ToastModule.forRoot(),
-    MdMenuModule
+    MdMenuModule,
+    MdDialogModule
   ],
   declarations: [
     AppComponent,
@@ -59,8 +62,10 @@ import { OrderByDatePipe } from './shared/orderByDate.pipe';
     BookingComponent,
     BookingsComponent,
     LoginComponent,
-    OrderByDatePipe
+    OrderByDatePipe,
+    BookingDialogComponent
   ],
+  entryComponents: [BookingDialogComponent],
   providers: [
     BookingService,
     {

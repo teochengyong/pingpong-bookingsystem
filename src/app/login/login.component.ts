@@ -13,7 +13,7 @@ import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 })
 
 export class LoginComponent {
-  visible: boolean = true;
+  visible: boolean = false;
   constructor(
     private userService: UserService,
     private sharedService: SharedService,

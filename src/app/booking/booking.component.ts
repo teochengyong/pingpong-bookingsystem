@@ -5,7 +5,8 @@ import { BookingService }   from '../shared/booking.service';
 import { Booking, ValidateOverlappedBookingOption }   from '../shared/booking.model';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 import { User } from '../shared/user';
-
+import { MdDialog, MdDialogRef } from '@angular/material';
+import { BookingDialogComponent } from '../booking-dialog/booking-dialog.component';
 import * as moment from 'moment';
 
 @Component({
@@ -34,13 +35,28 @@ export class BookingComponent {
  constructor(
   private sharedService: SharedService,
   private bookingService: BookingService,
-  private toastr: ToastsManager
+  private toastr: ToastsManager,
+  public dialog: MdDialog,
   ) {}
 
  addBooking(event: any, form: NgForm ): void {
-   if (!this.validateBooking(form) ) {
-     return;
-   };
+
+  if (!this.isLoggedIn() ) {
+    let dialogRef =  this.dialog.open(BookingDialogComponent);
+    dialogRef.afterClosed().subscribe(result => {
+      if(result === 'positive') {
+        this.sharedService.loginBroadcast.next({
+          visible: true
+        })
+      }
+    });
+    return;
+  };
+
+  if (!this.validateBooking(form) ) {
+    return;
+  };
+
 
   const date = this.getBookingDate(form);
   const endTime = this.getEndTime(date, form.value.duration);
@@ -180,6 +196,10 @@ export class BookingComponent {
     }
 
     return true;
+  }
+
+  private isLoggedIn(): Boolean {
+   return this.user.id !== 0;
   }
 
   cancel(event: any): void {
