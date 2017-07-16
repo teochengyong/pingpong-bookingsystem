@@ -20,7 +20,10 @@ export class LoginComponent {
     private toastr: ToastsManager
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.sharedService.loginBroadcast
+      .subscribe(options =>  this.visible = options.visible);
+  }
 
   login(event: Event, form: NgForm): void {
     event.preventDefault()

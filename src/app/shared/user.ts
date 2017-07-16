@@ -1,5 +1,5 @@
 export class User {
-  public id = 99;
-  public name = 'Beardy';
+  public id = 0;
+  public name = 'Stranger';
   public avatar = 'man-2.svg';
 }

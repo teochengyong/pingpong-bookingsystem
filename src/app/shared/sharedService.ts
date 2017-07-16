@@ -10,6 +10,7 @@ export class SharedService {
   public bookingDateChangedBroadcast: Subject<any> = new ReplaySubject();
   public bookingListChangedBroadcast: Subject<any> = new ReplaySubject();
   public userChangedBroadcast: Subject<any> = new Subject();
+  public loginBroadcast: Subject<any> = new Subject();
 
   constructor() { }
   addBooking(booking: any) {
@@ -38,5 +39,9 @@ export class SharedService {
   userChanged(user: any ) {
     console.log('userChanged');
     this.userChangedBroadcast.next(user);
+  }
+
+  loginTriggered(option: object) {
+    this.loginBroadcast.next(option);
   }
 }

@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';=
+import { NgModule } from '@angular/core';
 import {
   MdButtonModule,
   MdCheckboxModule,
@@ -7,7 +7,8 @@ import {
   MdCardModule,
   MdInputModule,
   MdDatepickerModule,
-  MdNativeDateModule
+  MdNativeDateModule,
+  MdMenuModule,
 } from '@angular/material';
 
 import { HttpModule } from '@angular/http';
@@ -18,6 +19,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule }   from '@angular/forms'; // <-- NgModel lives here
 import { ToastModule } from 'ng2-toastr/ng2-toastr';
+import { ToastOptions} from 'ng2-toastr/ng2-toastr';
+import { CustomToastOptions } from './shared/toastr-options';
 
 import { NavComponent }  from './core/nav/nav.component';
 import { AppComponent }  from './app.component';
@@ -46,7 +49,8 @@ import { OrderByDatePipe } from './shared/orderByDate.pipe';
     BrowserAnimationsModule,
     HttpModule,
     InMemoryWebApiModule.forRoot(InMemoryDataService),
-    ToastModule.forRoot()
+    ToastModule.forRoot(),
+    MdMenuModule
   ],
   declarations: [
     AppComponent,
@@ -57,7 +61,12 @@ import { OrderByDatePipe } from './shared/orderByDate.pipe';
     LoginComponent,
     OrderByDatePipe
   ],
-  providers: [ BookingService ],
+  providers: [
+    BookingService,
+    {
+      provide: ToastOptions, useClass: CustomToastOptions
+    },
+  ],
   bootstrap: [ AppComponent ]
 })
 export class AppModule { }
