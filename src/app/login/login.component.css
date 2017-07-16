@@ -1,0 +1,57 @@
+.login-form-container {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  background: rgba(255, 255, 255, 0.9);
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  z-index: 99;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.login-actions {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.hide {
+  display: none;
+}
+
+.show {
+  display: flex;
+}
+
+.close {
+  display: flex;
+  flex-direction: row-reverse;
+  text-transform: uppercase;
+  color: black;
+  font-weight: 400;
+  text-decoration: none;
+}
+
+.close:visited {
+  color: black;
+}
+
+.close .icon {
+  transition: transform 0.2s;
+}
+
+.close:hover .icon {
+  transform: scale(1.5)
+}
+
+.divider {
+  margin-left: 15px;
+  margin-right: 15px;
+}

@@ -32,6 +32,17 @@
   height: 24px;
 }
 
+.user {
+ font-size: 14px;
+ text-decoration: none;
+ display: flex;
+ align-items: center;
+ color: var(--fs-theme-text-primary-on-primary);
+}
+
+.name {
+  margin-right: 10px;
+}
 @media only screen and (max-width: 380px) {
     .title {
       font-size: 13px;

@@ -44,13 +44,16 @@ export class BookingListComponent {
       });
     this.sharedService.editBookingListSubject
       .subscribe((booking) => this.update(booking));
+    this.sharedService.userChangedBroadcast
+      .subscribe((user) => this.user = user);
 
     this.sharedService.bookingDateChangedBroadcast.next(this.bookingDate);
     this.getBookings();
     this.displayDate = moment().format('YYYY-MM-DD');
   }
 
-  delete(booking: Booking): void {
+  delete(event: Event, booking: Booking): void {
+    event.preventDefault();
     this.bookingService
       .delete(booking.id)
       .then( () => {
@@ -60,21 +63,22 @@ export class BookingListComponent {
   }
 
   update(booking: Booking): void {
-    console.log('update book listing')
+    console.log('update book listing');
     this.bookings = this.bookings
       .map( reservation => reservation.id === booking.id
         ? booking
         : reservation
-      )
+      );
   }
 
-  triggerEdit(booking: Booking): void {
+  triggerEdit(event: Event, booking: Booking): void {
+    event.preventDefault();
     let bookingDate = moment(booking.bookedDate);
-    let now = moment()
+    let now = moment();
     if ( now.diff(bookingDate, 'minutes') > 2  ) {
       this.toastr.error('Cannot edit booking which has been made more than 2 minutes ago.');
       return;
     }
-    this.sharedService.editBooking(booking)
+    this.sharedService.editBooking(booking);
   }
 }

@@ -5,7 +5,8 @@ import { BookingService }   from '../shared/booking.service';
 import { Booking, ValidateOverlappedBookingOption }   from '../shared/booking.model';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 import { User } from '../shared/user';
-
+import { MdDialog, MdDialogRef } from '@angular/material';
+import { BookingDialogComponent } from '../booking-dialog/booking-dialog.component';
 import * as moment from 'moment';
 
 @Component({
@@ -18,7 +19,7 @@ export class BookingComponent {
  user = new User();
  booking: Booking = {
    id: 0,
-   userId: this.user.Id,
+   userId: this.user.id,
    name: this.user.name,
    avatar: this.user.avatar,
    duration: 10,
@@ -34,31 +35,46 @@ export class BookingComponent {
  constructor(
   private sharedService: SharedService,
   private bookingService: BookingService,
-  private toastr: ToastsManager
+  private toastr: ToastsManager,
+  public dialog: MdDialog,
   ) {}
 
  addBooking(event: any, form: NgForm ): void {
-   if (!this.validateBooking(form) ) {
-     return;
-   };
+
+  if (!this.isLoggedIn() ) {
+    let dialogRef =  this.dialog.open(BookingDialogComponent);
+    dialogRef.afterClosed().subscribe(result => {
+      if(result === 'positive') {
+        this.sharedService.loginBroadcast.next({
+          visible: true
+        })
+      }
+    });
+    return;
+  };
+
+  if (!this.validateBooking(form) ) {
+    return;
+  };
+
 
   const date = this.getBookingDate(form);
-  const endTime = this.getEndTime(date, form.value.duration)
+  const endTime = this.getEndTime(date, form.value.duration);
    if (!this.validateOverlappedBooking(date, endTime) ) {
     return;
    }
   this.bookingService.add({
-    name: 'Beardy Tester',
-    avatar: 'man-2.svg',
+    name: this.user.name,
+    avatar: this.user.avatar,
     date: date,
     duration: form.value.duration,
     endTime: this.getEndTime(date, form.value.duration),
     bookedDate: moment().toISOString(),
-    userId: this.user.Id
+    userId: this.user.id
   }).then( booking => {
     this.toastr.success('Booking successfully created');
-    this.sharedService.addBooking(booking)
-  })
+    this.sharedService.addBooking(booking);
+  });
  }
 
  ngOnInit(): void {
@@ -72,6 +88,9 @@ export class BookingComponent {
   this.sharedService.bookingListChangedBroadcast.subscribe(bookings => {
     this.bookings = bookings;
   });
+  this.sharedService.userChangedBroadcast.subscribe(user => {
+    this.user = user;
+  });
  }
 
  updateBooking(event: any, booking: NgForm): void {
@@ -80,7 +99,7 @@ export class BookingComponent {
   };
 
   const date = this.getBookingDate(booking);
-  const endTime = this.getEndTime(date, booking.value.duration)
+  const endTime = this.getEndTime(date, booking.value.duration);
   if (!this.validateOverlappedBooking(date, endTime, { ignore: this.booking}) ) {
   return;
   }
@@ -96,30 +115,30 @@ export class BookingComponent {
   };
 
   private getBookingDate(booking: NgForm): string {
-    const hour = parseInt(booking.value.time.split(':')[0], 10)
-    const minute = parseInt(booking.value.time.split(':')[1], 10)
+    const hour = parseInt(booking.value.time.split(':')[0], 10);
+    const minute = parseInt(booking.value.time.split(':')[1], 10);
     let dateTime = moment(this.booking.date).set({
       'hour': hour,
       'minute': minute,
       'second': 0,
       'millisecond': 0
     });
-    return dateTime.toISOString()
+    return dateTime.toISOString();
   }
 
-  private getEndTime(date: string, duration: number ): string {
+  private getEndTime(date: string, duration: number ): any {
     return moment(date)
           .add( duration, 'minutes')
-          .toISOString()
+          .toISOString();
   }
 
   private validateBooking(booking: NgForm): boolean {
-    if(booking.value.duration < 10 || booking.value.duration > 60  ) {
+    if (booking.value.duration < 10 || booking.value.duration > 60  ) {
       this.toastr.error('Please book within 10 to 60 minutes.');
       return false;
     };
 
-    if(!booking.value.time || !booking.value.duration ) {
+    if (!booking.value.time || !booking.value.duration ) {
       this.toastr.error('Unable to book due to missing fields.');
       return false;
     };
@@ -130,13 +149,13 @@ export class BookingComponent {
 
     let startTime = moment(start);
     let endTime = moment(end);
-    let reservations = this.bookings.slice(0)
+    let reservations = this.bookings.slice(0);
     if (option && option.ignore) {
-      reservations = reservations.filter((reservation) => option.ignore.id !== reservation.id )
+      reservations = reservations.filter((reservation) => option.ignore.id !== reservation.id );
     }
-    for( let booking of reservations ) {
-      const bookingStartTime = moment(booking.date)
-      const bookingEndTime = moment(booking.endTime)
+    for ( let booking of reservations ) {
+      const bookingStartTime = moment(booking.date);
+      const bookingEndTime = moment(booking.endTime);
       // Overlaps booking start time
       if ( startTime < bookingStartTime && endTime > bookingStartTime ) {
         this.toastr.error(`The booking end time overlapped with a booking that starts at ${bookingStartTime.format(this.timeFormat)}`);
@@ -155,9 +174,9 @@ export class BookingComponent {
         return false;
       }
 
-      if (booking.userId === this.user.Id) {
+      if (booking.userId === this.user.id) {
         // 1 hour before current user's booking
-        let currentBookingEndTimeWithOneHourExtra = moment(endTime).add(1, 'hours')
+        let currentBookingEndTimeWithOneHourExtra = moment(endTime).add(1, 'hours');
         if ( startTime < bookingStartTime && currentBookingEndTimeWithOneHourExtra > bookingStartTime ) {
           this.toastr.error(`
             The booking must have a gap of an hour with your booking that starts at ${bookingStartTime.format(this.timeFormat)}
@@ -166,8 +185,8 @@ export class BookingComponent {
         }
 
         // 1 after current user's booking
-        let bookingEndTimeWithOneHourExtra = moment(bookingEndTime).add(1, 'hours')
-        if ( startTime > bookingEndTime && bookingEndTimeWithOneHourExtra > startTime ) {
+        let bookingEndTimeWithOneHourExtra = moment(bookingEndTime).add(1, 'hours');
+        if ( startTime >= bookingEndTime && bookingEndTimeWithOneHourExtra >= startTime ) {
           this.toastr.error(`
             The booking must have a gap of an hour with your booking that ends at ${bookingEndTime.format(this.timeFormat)}
           `);
@@ -177,6 +196,10 @@ export class BookingComponent {
     }
 
     return true;
+  }
+
+  private isLoggedIn(): Boolean {
+   return this.user.id !== 0;
   }
 
   cancel(event: any): void {

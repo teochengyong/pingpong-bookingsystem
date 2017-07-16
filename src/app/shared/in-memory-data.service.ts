@@ -6,7 +6,7 @@ export class InMemoryDataService implements InMemoryDbService {
     const bookings = [
       {
         id: 1,
-        name: 'Teo Cheng Yong',
+        name: 'Cheng Yong',
         userId: 1,
         avatar: 'boy-1.svg',
         date: moment().set({
@@ -80,6 +80,29 @@ export class InMemoryDataService implements InMemoryDbService {
         duration: 20
       }
     ];
-    return {bookings}
+    const users = [
+      {
+        id: 1,
+        name: 'Cheng Yong',
+        avatar: 'boy-1.svg',
+        salt: '',
+        hash: ''
+      },
+      {
+        id: 2,
+        name: 'Ashlyn',
+        avatar: 'boy-1.svg',
+        salt: '',
+        hash: ''
+      },
+      {
+        id: 3,
+        name: 'Tom Bayers',
+        avatar: 'man-1.svg',
+        salt: '',
+        hash: ''
+      },
+    ];
+    return {bookings, users}
   }
 }

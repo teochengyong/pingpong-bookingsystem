@@ -4,8 +4,18 @@
   </a>
   <span class="title">Ping Pong Booking System</span>
   <section class="action-container">
-    <h4 class="userName">{{user.name}}</h4>
+  <md-menu #menu="mdMenu" yPosition="below">
+     <button *ngIf="user.id === 0" md-menu-item (click)="login($event)">
+      <span>LogIn</span>
+    </button>
+     <button *ngIf="user.id !== 0" md-menu-item (click)="logout($event)">
+      <span>Logout</span>
+    </button>
+  </md-menu>
+  <a href="#" class="user" [mdMenuTriggerFor]="menu" (click)="onUserClicked($event)">
+    <span class="name">{{user.name}}</span>
     <img class="userPhoto" src="../static/icons/{{user.avatar}}" alt="{{user.name}}">
+  </a>
     <!--<button md-raised-button class="md-fs-theme btn-main mat-raised-button">Book</button>-->
   </section>
 </md-toolbar>

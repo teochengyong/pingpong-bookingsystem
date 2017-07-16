@@ -1,17 +1,17 @@
 <md-list class="booking-list">
   <h3>Today's Bookings</h3>
   <h4>{{bookingDate | date:'longDate'}}</h4>
-  <md-list-item *ngFor='let booking of (bookings | orderByDate)'>
+  <md-list-item class="booking" *ngFor='let booking of (bookings | orderByDate)'>
     <img md-list-avatar title='{{booking.name}}' class="avatar" src="static/icons/{{booking.avatar}}">
 
     <p md-line> {{booking.name}} </p>
     <p md-line class="demo-2"> {{booking.date | date:'shortTime'}} - {{booking.endTime | date:'shortTime'}}, {{booking.duration}} mins </p>
     <div class="action-containers">
-      <a href="#" *ngIf='booking.userId === this.user.Id' (click)="triggerEdit(booking)" class="action material-icons"
+      <a href="#" *ngIf='booking.userId === this.user.id' title="{{booking.id}}" (click)="triggerEdit($event, booking)" class="action material-icons"
         aria-label="Update booking" title="Update booking">
         edit
       </a>
-      <a href="#" *ngIf='booking.userId === this.user.Id' (click)="delete(booking)" class="action material-icons"
+      <a href="#" *ngIf='booking.userId === this.user.id' title="{{booking.id}}" (click)="delete($event, booking)" class="action material-icons"
         aria-label="Delete booking" title="Delete booking">
         delete
       </a>
