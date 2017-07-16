@@ -7,11 +7,11 @@
     <p md-line> {{booking.name}} </p>
     <p md-line class="demo-2"> {{booking.date | date:'shortTime'}} - {{booking.endTime | date:'shortTime'}}, {{booking.duration}} mins </p>
     <div class="action-containers">
-      <a href="#" *ngIf='booking.userId === this.user.Id' (click)="triggerEdit(booking)" class="action material-icons"
+      <a href="#" *ngIf='booking.userId === this.user.Id' (click)="triggerEdit($event, booking)" class="action material-icons"
         aria-label="Update booking" title="Update booking">
         edit
       </a>
-      <a href="#" *ngIf='booking.userId === this.user.Id' (click)="delete(booking)" class="action material-icons"
+      <a href="#" *ngIf='booking.userId === this.user.Id' (click)="delete($event, booking)" class="action material-icons"
         aria-label="Delete booking" title="Delete booking">
         delete
       </a>

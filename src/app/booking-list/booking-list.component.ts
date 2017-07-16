@@ -50,7 +50,8 @@ export class BookingListComponent {
     this.displayDate = moment().format('YYYY-MM-DD');
   }
 
-  delete(booking: Booking): void {
+  delete(event: Event, booking: Booking): void {
+    event.preventDefault();
     this.bookingService
       .delete(booking.id)
       .then( () => {
@@ -68,7 +69,8 @@ export class BookingListComponent {
       )
   }
 
-  triggerEdit(booking: Booking): void {
+  triggerEdit(event: Event, booking: Booking): void {
+    event.preventDefault();
     let bookingDate = moment(booking.bookedDate);
     let now = moment()
     if ( now.diff(bookingDate, 'minutes') > 2  ) {
