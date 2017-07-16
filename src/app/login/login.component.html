@@ -1,8 +1,14 @@
-<div>
-  <form #LoginForm="ngForm">
-    <md-input-container>
-      <input mdInput type="text" placeholder="Name" name="name" value="" ngModel>
-    </md-input-container>
-    <button md-raised-button (click)="Login($event, LoginForm)"class="md-fs-theme btn-main mat-raised-button">Login</button>
+<div class="login-form-container" [ngClass]="{'hide': !visible, 'show': visible}">
+  <form #LoginForm="ngForm" class="login-form">
+    <a href="#" class="close" (click)="close($event)"><span class="icon">X</span></a>
+    <h3>Welcome, Stranger</h3>
+    <div class="row">
+      <md-input-container floatPlaceholder="always">
+        <input mdInput type="text" placeholder="Name" name="name" value="" ngModel>
+      </md-input-container>
+    </div>
+    <div class="row login-actions">
+      <button md-raised-button (click)="login($event, LoginForm)"class="md-fs-theme btn-main mat-raised-button">Login</button>
+    </div>
   </form>
 </div>

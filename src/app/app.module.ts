@@ -1,5 +1,4 @@
-import { NgModule } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { NgModule } from '@angular/core';=
 import {
   MdButtonModule,
   MdCheckboxModule,
@@ -36,21 +35,6 @@ import { OrderByDatePipe } from './shared/orderByDate.pipe';
   imports: [
     BrowserModule,
     FormsModule, // <-- import the FormsModule before binding with [(ngModel)]
-    RouterModule.forRoot([
-      {
-        path: 'Bookings',
-        component: BookingsComponent
-      },
-      {
-        path: '',
-        redirectTo: '/Bookings',
-        pathMatch: 'full',
-      },
-      {
-        path: 'Login',
-        component: LoginComponent,
-      }
-    ]),
     MdButtonModule,
     MdCheckboxModule,
     MdToolbarModule,
